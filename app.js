@@ -22,10 +22,6 @@ models.defineModels(mongoose, function() {
   });
 });
 
-app.configure('registration', function() {
-  app.set('db-uri', 'mongodb://localhost:'+port+'/hackathon-registraion');
-});
-
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.logger('dev'))
