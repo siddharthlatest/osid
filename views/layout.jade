@@ -1,0 +1,29 @@
+!!!5
+html
+  head
+    title #{title} - OSID Hack Day
+    link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/custom.css')
+    script(src='/js/bootstrap.js')
+    script(src='http://code.jquery.com/jquery-latest.js')
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#') OSID Hackathon
+          .nav-collapse.collapse
+            ul.nav
+              block navbarTitles
+                li
+                  a(href='#') Home
+                li
+                  a(href='/about') About
+    .container(style='position:relative')
+      block content
+      br
+      #foot(style='position:absolute;bottom:0;')
+        p(style='text-align:centre;') Made with love using Node.js, express and jade
