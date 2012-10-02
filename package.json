@@ -5,7 +5,10 @@
     "express": "3.0.x",
     "jade": "*",
     "stylus": "*",
-    "nib": "*"
+    "nib": "*",
+    "mongoose": "*",
+    "mongodb": "*",
+    "connect-mongodb": "*"
   },
   "engines": {
     "node": "0.8.x",
