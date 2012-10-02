@@ -2,7 +2,6 @@ var express = require('express'),
     mongoose = require('mongoose'),
     mongoStore = require('connect-mongodb'),
     models = require('./models'),
-    db,
     reg,
     stylus = require("stylus"),
     nib = require("nib");
@@ -16,11 +15,15 @@ function compile(str, path) {
 
 models.defineModels(mongoose, function() {
   app.registration = Registration = mongoose.model('Registration');
-  db = mongoose.connect(app.set('db-uri'));
+  mongoose.connect('mongodb://106.187.50.124/foobar');
+  mongoose.connection.on("open", function() {
+    console.log("Connected to foobar schema");
+    Registration.count({}, function(err, count) {console.log("Records: ", count);});
+  });
 });
 
 app.configure('registration', function() {
-  app.set('db-uri', 'mongodb://localhost/hackathon-registraion');
+  app.set('db-uri', 'mongodb://localhost:'+port+'/hackathon-registraion');
 });
 
 app.set('views', __dirname + '/views')
@@ -32,20 +35,23 @@ app.use(stylus.middleware(
   }
 ))
 app.use(express.static(__dirname + '/assets'));
+app.use(express.bodyParser());
 
 app.get('/', function (req, res) {
   res.render('index', {title: 'Home'});
 });
 app.post('/register', function (req, res) {
+  console.log(req.body);
+  var reg = new Registration({githubHandle:req.param('githubHandle'), organization:req.param('organization')});
+  console.log(reg);
+  reg.save(function(err) {
+    if (err)
+      console.log("Error: ", err);
+  });
   res.render('index', {title: 'Home'});
 });
 app.get('/about', function (req, res) {
   res.render('about', {title: 'About'});
-});
-
-app.post('/register', function(request, response){
-  var reg = new Registration({request.params.github-handle, request.params.organisation});
-  reg.save();
 });
 
 var port = process.env.PORT || 5000;
