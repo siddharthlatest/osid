@@ -1,15 +1,15 @@
 extend layout
 block navbarTitles
   li.active
-    a(href='#') Home
+    a(href='#') Hackathon
   li
-    a(href='/about') About
+    a(href='/about') OSID Team
 block content
   .row
     #topOfContent.span12(style='z-index:10;top:40px;position:fixed;')
   .row
     .span3.bs-docs-sidebar
-      ul.nav.nav-list.bs-docs-sidenav.affix
+      ul.nav.nav-list.bs-docs-sidenav(data-spy='affix',data-offset-top='200')
         li
           a(href='#about')
             i.icon-chevron-right
