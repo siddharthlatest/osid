@@ -33,7 +33,7 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.bodyParser());
 
 app.get('/', function (req, res) {
-  res.render('index', {title: 'Home'});
+  res.render('index', {title: ''});
 });
 app.post('/register', function (req, res) {
   console.log(req.body);
