@@ -5,5 +5,37 @@ block navbarTitles
   li
     a(href='/about') About
 block content
-  .well
-    include form.html
+  .row
+    .span3.bs-docs-sidebar
+      ul.nav.nav-list.bs-docs-sidenav.affix
+        li
+          a(href='#about')
+            i.icon-chevron-right
+            | OSID Hackathon
+        li
+          a(href='#registration')
+            i.icon-chevron-right
+            | Registration
+        li
+          a(href='#judges')
+            i.icon-chevron-right
+            | Judges
+        li
+          a(href='#announcements')
+            i.icon-chevron-right
+            | Important announcements
+        li
+          a(href='#sponsors')
+            i.icon-chevron-right
+            | Sponsors
+    .span9
+      section#about
+        p(style='height:400px;background-color:#eee;') Hackathon is an event by OSID.
+      section#registration.well
+        include form.html
+      section#judges
+        p(style='height:400px;background-color:#ccc;') Judges
+      section#announcements
+        p(style='height:400px;background-color:#ddd;') Foobar blog
+      section#sponsors
+        p(style='height:400px;background-color:#eee;') Sponsors

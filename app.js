@@ -25,11 +25,10 @@ models.defineModels(mongoose, function() {
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jade')
 app.use(express.logger('dev'))
-app.use(stylus.middleware(
-  { src: __dirname + '/assets'
-  , compile: compile
-  }
-))
+app.use(stylus.middleware({
+  src: __dirname + '/assets',
+  compile: compile
+}));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.bodyParser());
 
