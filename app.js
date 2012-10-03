@@ -40,10 +40,12 @@ app.post('/register', function (req, res) {
   var reg = new Registration({githubHandle:req.param('githubHandle'), organization:req.param('organization')});
   console.log(reg);
   reg.save(function(err) {
-    if (err)
+    if (err) {
       console.log("Error: ", err);
+      res.send('Error saving id -', err);
+    } else
+      res.send('success');
   });
-  res.render('index', {title: 'Home'});
 });
 app.get('/about', function (req, res) {
   res.render('about', {title: 'About'});

@@ -6,6 +6,8 @@ block navbarTitles
     a(href='/about') About
 block content
   .row
+    #topOfContent.span12(style='z-index:10;top:40px;position:fixed;')
+  .row
     .span3.bs-docs-sidebar
       ul.nav.nav-list.bs-docs-sidenav.affix
         li
@@ -31,7 +33,7 @@ block content
     .span9
       section#about
         p(style='height:400px;background-color:#eee;') Hackathon is an event by OSID.
-      section#registration.well
+      section#registration
         include form.html
       section#judges
         p(style='height:400px;background-color:#ccc;') Judges
@@ -39,3 +41,5 @@ block content
         p(style='height:400px;background-color:#ddd;') Foobar blog
       section#sponsors
         p(style='height:400px;background-color:#eee;') Sponsors
+block js
+  script(type='text/javascript', src='/js/form.js')

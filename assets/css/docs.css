@@ -54,7 +54,7 @@ body > .navbar .brand:hover {
 
 /* padding for in-page bookmarks and fixed navbar */
 section {
-  padding-top: 30px;
+  padding-top: 60px;
 }
 section > .page-header,
 section > .lead {
@@ -798,8 +798,7 @@ form.bs-docs-example {
   opacity: 1;
 }
 .bs-docs-sidenav.affix {
-  top: 40px;
-}
+  top: 60px;
 .bs-docs-sidenav.affix-bottom {
   position: absolute;
   top: auto;
