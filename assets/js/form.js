@@ -1,4 +1,12 @@
 $(document).ready(function() {
+  $('#hackinfo').popover({
+    trigger:'hover',
+    delay: {show: 100, hide: 3000}
+  });
+  $('#githubhandleinfo').popover({
+    trigger:'hover',
+    delay: {show: 100, hide: 3000}
+  });
   $('#register').submit(function() {
     $.post('/register', $('#register').serialize(), function(data) {
       console.log(data);

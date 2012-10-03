@@ -1,17 +1,13 @@
 <form id="register" action="/register" method="POST">
-  <legend>Register for OSID Hackathon</legend>
-  <label>I am a</label>
-  <select>
-    <option>Developer</option>
-    <option>Designer</option>
-    <option>UX</option>
-  </select>
-  <label>Best hack</label>
+  <legend>Register for OSID Hackathon&nbsp;<span style="font-size:10px;">(All fields are mandatory)</span></legend>
+  <label>Name</label>
+  <input type="text" name="firstname" placeholder="First name">&nbsp;<input type="text" name="firstname" placeholder="Last name"><br>
+  <label>Best hack <i id="hackinfo" class=icon-info-sign title='<strong>Screening Criteria</strong>' data-content="Best hack is the most important thing you have built or achieved. It could be a regex parser that can search through huge codebases in sublinear time, a webapp serving thousands of users, or something out of the blue - for instance, a code deployed in space."></i></label>
   <input type="text" name="hacklink" placeholder="Link to your best hack"><br>
-  <textarea rows="4" class="input-xxlarge" name="hackdesc" placeholder="Write about your best hack within 200 words"></textarea>
-  <label>E-mail</label>
-  <input type="text" name="e-mail" placeholder="Your e-mail address">
-  <label>Github handle</label>
+  <textarea rows="4" class="input-xxlarge" name="hackdesc" placeholder="Describe your best hack within 120 words."></textarea>
+  <label>Contact Information</label>
+  <input type="text" name="e-mail" placeholder="Your e-mail address">&nbsp;<input type="text" name="e-mail" placeholder="A 10-digit cellphone number">
+  <label>Github handle <i id='githubhandleinfo' class='icon-info-sign' data-content="You will be logging in using your github handle. Please <a href='https://github.com' target='_blank'>create</a> a github account if you don't have one."></i></label>
   <input type="text" name="githubHandle" placeholder="Github user name">
   <label>Twitter handle</label>
   <input type="text" name="twitterHandle" placeholder="Twitter user name">
