@@ -15,6 +15,10 @@ block content
             i.icon-chevron-right
             | OSID Hackathon
         li
+          a(href='#announcements')
+            i.icon-chevron-right
+            | Important announcements
+        li
           a(href='#registration')
             i.icon-chevron-right
             | Registration
@@ -23,23 +27,31 @@ block content
             i.icon-chevron-right
             | Judges
         li
-          a(href='#announcements')
-            i.icon-chevron-right
-            | Important announcements
-        li
           a(href='#sponsors')
             i.icon-chevron-right
             | Sponsors
+        li
+          a(href='#rules')
+            i.icon-chevron-right
+            | Rules for Participation
+        li
+          a(href='#discuss')
+            i.icon-chevron-right
+            | Discuss Hackathon
     .span9
       section#about
         p(style='height:400px;background-color:#eee;') Hackathon is an event by OSID.
+      section#announcements
+        p(style='height:400px;background-color:#ddd;') Foobar blog
       section#registration
         include form.html
       section#judges
         p(style='height:400px;background-color:#ccc;') Judges
-      section#announcements
-        p(style='height:400px;background-color:#ddd;') Foobar blog
       section#sponsors
         p(style='height:400px;background-color:#eee;') Sponsors
+      section#rules
+        p(style='height:400px;background-color:#888;') Rules for Participation
+      section#discuss
+        p(style='height:400px;background-color:#eee;') Contact us for any queries at team@osid.in
 block js
   script(type='text/javascript', src='/js/form.js')
