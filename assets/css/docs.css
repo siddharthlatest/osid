@@ -174,7 +174,6 @@ hr.soften {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url(../img/bs-docs-masthead-pattern.png) repeat center center;
   opacity: .4;
 }
 
@@ -799,13 +798,28 @@ form.bs-docs-example {
 }
 .bs-docs-sidenav.affix {
   top: 60px;
+}
 .bs-docs-sidenav.affix-bottom {
   position: absolute;
   top: auto;
   bottom: 270px;
 }
-
-
+.countdown.affix {
+  top: 440px;
+}
+.countdown.affix-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 270px;
+}
+.countdownHolder.affix {
+  top: 400px;
+}
+.countdownHolder.affix-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 270px;
+}
 
 
 /* Responsive
@@ -866,6 +880,19 @@ form.bs-docs-example {
   .bs-docs-sidenav.affix {
     top: 0;
   }
+  .countdownHolder {
+    margin:0 auto;
+    font: 13px/1.2 'Open Sans Condensed',sans-serif;
+    letter-spacing:-3px;
+    width: 166px;
+    margin-top:20px;
+  }
+  .countdownHolder.affix {
+    top: 400;
+  }
+  .countdown.affix {
+    top: 400;
+  }
 }
 
 /* Tablet
@@ -908,6 +935,24 @@ form.bs-docs-example {
     margin-bottom: 20px;
   }
   .bs-docs-sidenav.affix {
+    position: static;
+    width: auto;
+    top: 0;
+  }
+  .countdownHolder {
+    width: auto;
+    margin-bottom: 20px;
+  }
+  .countdownHolder.affix {
+    position: static;
+    width: auto;
+    top: 0;
+  }
+  .countdown {
+    width: auto;
+    margin-bottom: 20px;
+  }
+  .countdown.affix {
     position: static;
     width: auto;
     top: 0;
