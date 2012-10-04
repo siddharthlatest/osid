@@ -9,8 +9,8 @@ var express = require('express'),
     util = require('util'),
     GitHubStrategy = require('passport-github').Strategy;
 
-var GITHUB_CLIENT_ID = "0453e54b692bf387e68b",
-    GITHUB_CLIENT_SECRET = "71fe063ca8891b28d3951a36536efabbd4c071d8";
+var GITHUB_CLIENT_ID = "3265ceedda2e8dcc7863",
+    GITHUB_CLIENT_SECRET = "61396652f379ac7b1063242bdc1330aeda459854";
 
 var app = express();
 
@@ -25,7 +25,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:5000/auth/github/callback#registration"
+    callbackURL: "http://osid.in/auth/github/callback#registration"
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
