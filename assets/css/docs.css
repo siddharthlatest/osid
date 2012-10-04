@@ -885,13 +885,13 @@ form.bs-docs-example {
     font: 13px/1.2 'Open Sans Condensed',sans-serif;
     letter-spacing:-3px;
     width: 166px;
-    margin-top:20px;
+    margin-top:10px;
   }
   .countdownHolder.affix {
-    top: 400;
+    top: 330px;
   }
   .countdown.affix {
-    top: 400;
+    top: 360px;
   }
 }
 
