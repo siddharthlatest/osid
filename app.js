@@ -9,8 +9,8 @@ var express = require('express'),
     util = require('util'),
     GitHubStrategy = require('passport-github').Strategy;
 
-var GITHUB_CLIENT_ID = "4c5f19b873ffd11a16e4",
-    GITHUB_CLIENT_SECRET = "1e14d564e9e53cab1e292b5ae4833498317cfd8d";
+var GITHUB_CLIENT_ID = "3265ceedda2e8dcc7863",
+    GITHUB_CLIENT_SECRET = "61396652f379ac7b1063242bdc1330aeda459854";
 
 var app = express();
 
@@ -25,21 +25,21 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://osid.in"
+    callbackURL: "http://127.0.0.1:5000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
       console.log('User profile after github login - ', profile);
       console.log('Access token - ', accessToken);
-      console.log('Refresh token - ', refreshToken);
-      Registration.find({id: profile.id}, 'githubHandle', function(err, user) {
+      Registration.findOne({'githubHandle': profile.username}, function(err, user) {
         console.log('Error any - ', err);
         if(err) {    // OAuth error
           return done(err);
         } else if (user) {  // User record in the database
-          console.log(user);
+          console.log("User is in the database", user);
           return done(null, user);
         } else {     // record not in database
+          console.log("New registration", user);
           var reg = new Registration();
           reg.set('githubHandle', profile.id);
           return done(null, reg);	
@@ -66,18 +66,35 @@ models.defineModels(mongoose, function() {
   });
 });
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
-app.use(express.logger('dev'))
-app.use(stylus.middleware({
-  src: __dirname + '/assets',
-  compile: compile
-}));
-app.use(express.static(__dirname + '/assets'));
-app.use(express.bodyParser());
+app.configure(function() {
+  app.set('views', __dirname + '/views')
+  app.set('view engine', 'jade')
+  app.use(express.logger('dev'))
+  app.use(stylus.middleware({
+    src: __dirname + '/assets',
+    compile: compile
+  }));
+  app.use(express.static(__dirname + '/assets'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: 'keyboard cat'}));
+  app.use(passport.initialize());
+  app.use(passport.session({secret: ''}));
+  app.use(app.router);
+});
 
 app.get('/', function (req, res) {
-  res.render('index', {title: ''});
+  res.locals.githubHandle=''
+  res.locals.twitterHandle=''
+  res.locals.organization=''
+  res.locals.hackdesc=''
+  res.locals.hacklink=''
+  res.locals.cell=''
+  res.locals.email=''
+  res.locals.firstname=''
+  res.locals.lastname=''
+  res.render('index', {title: '', githubHandle: ''});
 });
 
 app.get('/auth/github',
@@ -89,9 +106,19 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log('On way to rendering after github login - ', req);
-    console.log('User', req.user);
-    res.render('index', req.user);
+    res.locals.githubHandle=''
+    res.locals.twitterHandle=''
+    res.locals.organization=''
+    res.locals.hackdesc=''
+    res.locals.hacklink=''
+    res.locals.cell=''
+    res.locals.email=''
+    res.locals.firstname=''
+    res.locals.lastname=''
+    var object = req.user;
+    object['title'] = '';
+    console.log('Before rendering: User --', object);
+    res.render('index', object);
   });
 
 app.get('/logout', function(req, res){
@@ -113,6 +140,7 @@ app.post('/register', function (req, res) {
 });
 
 app.get('/about', function (req, res) {
+  res.locals.githubHandle = ''
   res.render('about', {title: 'About'});
 });
 

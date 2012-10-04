@@ -51,6 +51,24 @@ block content
         p(style='height:400px;background-color:#ddd;') Foobar blog
       section#registration
         include form.html
+        if (githubHandle) !== ''
+        input(type='hidden', id='githubHandleJ', value='#{githubHandle}')
+        if (twitterHandle) !== ''
+          input(type='hidden', id='twitterHandleJ', value='#{twitterHandle}')
+        if (organization) !== ''
+          input(type='hidden', id='organizationJ', value='#{organization}')
+        if (firstname) !== ''
+          input(type='hidden', id='firstnameJ', value='#{firstname}')
+        if (lastname) !== ''
+          input(type='hidden', id='lastnameJ', value='#{lastname}')
+        if (hacklink) !== ''
+          input(type='hidden', id='hacklinkJ', value='#{hacklink}')
+        if (hackdesc) !== ''
+          input(type='hidden', id='hackdescJ', value='#{hackdesc}')
+        if (cell) !== ''
+          input(type='hidden', id='cellJ', value='#{cell}')
+        if (email) !== ''
+          input(type='hidden', id='emailJ', value='#{email}')
       section#judges
         p(style='height:400px;background-color:#ccc;') Judges
       section#sponsors

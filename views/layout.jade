@@ -15,7 +15,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.pull-left.brand(href='#') OSID Hackathon
+          a.pull-left.brand(href='/') OSID Hackathon
           .nav-collapse.collapse
             ul.nav
               block navbarTitles
@@ -23,7 +23,12 @@ html
                   a(href='#') Hackathon
                 li
                   a(href='/about') OSID Team
-            a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;') Login with Github
+            if (githubHandle) !== ''
+              a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;') Hi, #{githubHandle}
+            else
+              a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;')
+                img(src='/img/githubauth.png',width='20px')
+                | &nbsp; Login with Github
     .container(style='position:relative;min-height:440px;')
       .jumbotron.subhead#overview
         .row
