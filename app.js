@@ -4,8 +4,63 @@ var express = require('express'),
     models = require('./models'),
     reg,
     stylus = require("stylus"),
-    nib = require("nib");
+    nib = require("nib"),
+    passport = require('passport'),
+    util = require('util'),
+    GitHubStrategy = require('passport-github').Strategy;
+
+var GITHUB_CLIENT_ID = "4c5f19b873ffd11a16e4",
+    GITHUB_CLIENT_SECRET = "1e14d564e9e53cab1e292b5ae4833498317cfd8d";
+
 var app = express();
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+
+passport.use(new GitHubStrategy({
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: "http://osid.in"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+    Registration.find({id: profile.id}, 'name', function(err, user){
+                      if(err){
+                        var reg = new Registration();
+                        reg.set('id', profile.id);
+                        return done(null, reg);	
+                      }else{
+                        console.log(user);
+			return done(null, user);
+                      }
+                     })
+
+    });
+  }
+));
+
+app.get('/auth/github',
+  passport.authenticate('github'),
+  function(req, res){
+
+  });
+
+app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 function compile(str, path) {
   return stylus(str)
@@ -13,6 +68,8 @@ function compile(str, path) {
     .use(nib())
 }
 
+
+//setup registration model
 models.defineModels(mongoose, function() {
   app.registration = Registration = mongoose.model('Registration');
   mongoose.connect('mongodb://106.187.50.124/foobar');
@@ -35,6 +92,7 @@ app.use(express.bodyParser());
 app.get('/', function (req, res) {
   res.render('index', {title: ''});
 });
+
 app.post('/register', function (req, res) {
   console.log(req.body);
   var reg = new Registration({githubHandle:req.param('githubHandle'), organization:req.param('organization')});
@@ -47,6 +105,7 @@ app.post('/register', function (req, res) {
       res.send('success');
   });
 });
+
 app.get('/about', function (req, res) {
   res.render('about', {title: 'About'});
 });
