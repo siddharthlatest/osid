@@ -81,7 +81,7 @@ block content
       section#venue
         h2 Venue
         p(style='') The hackathon will be held at the DA-IICT campus.
-        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+        #addMap
       // section#prizes
       //  h2 Prizes
       //  p(style='') We love good hacks and we love to pamper our hackers! Here are the prizes and swag we are waiting to give away: 
@@ -139,3 +139,7 @@ block js
   script(type='text/javascript', src='/js/form.js')
   script(src='/countdown/jquery.countdown.js')
   script(src='/js/script.js')
+  script(type='text/javascript')
+    $(window).bind("load", function() {
+      $('#addMap').html("<iframe width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295&amp;output=embed'></iframe><br /><small><a href='https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295' target='_blank' style='color:#0000FF;text-align:left'>View Larger Map</a></small>");
+    });
