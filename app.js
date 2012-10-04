@@ -22,7 +22,6 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
@@ -49,25 +48,6 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
-
-app.get('/auth/github',
-  passport.authenticate('github'),
-  function(req, res) {
-    console.log('called while authentication');
-  });
-
-app.get('/auth/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/' }),
-  function(req, res) {
-    console.log('On way to rendering after github login - ', req);
-    console.log('User', req.user);
-    res.render('index', req.user);
-  });
-
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
 
 function compile(str, path) {
   return stylus(str)
@@ -98,6 +78,25 @@ app.use(express.bodyParser());
 
 app.get('/', function (req, res) {
   res.render('index', {title: ''});
+});
+
+app.get('/auth/github',
+  passport.authenticate('github'),
+  function(req, res) {
+    console.log('called while authentication');
+  });
+
+app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/' }),
+  function(req, res) {
+    console.log('On way to rendering after github login - ', req);
+    console.log('User', req.user);
+    res.render('index', req.user);
+  });
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 app.post('/register', function (req, res) {
