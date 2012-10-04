@@ -30,31 +30,34 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-    Registration.find({id: profile.id}, 'name', function(err, user){
-                      if(err){
-                        var reg = new Registration();
-                        reg.set('id', profile.id);
-                        return done(null, reg);	
-                      }else{
-                        console.log(user);
-			return done(null, user);
-                      }
-                     })
-
+      Registration.find({id: profile.id}, 'githubHandle', function(err, user) {
+        console.log(profile);
+        if(err) {    // OAuth error
+          return done(err);
+        } else if (user) {  // User record in the database
+          console.log(user);
+          return done(null, user);
+        } else {     // record not in database
+          var reg = new Registration();
+          reg.set('githubHandle', profile.id);
+          return done(null, reg);	
+        }
+      })
     });
   }
 ));
 
 app.get('/auth/github',
   passport.authenticate('github'),
-  function(req, res){
-
+  function(req, res) {
+    console.log('called while authentication');
   });
 
 app.get('/auth/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('/');
+    console.log(req.user);
+    res.render('index', req.user);
   });
 
 app.get('/logout', function(req, res){

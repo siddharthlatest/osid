@@ -11,7 +11,6 @@ function defineModels(mongoose, fn) {
     'githubHandle': String,
     'twitterHandle': String,
     'organization': String,
-    'id': String
   });
 
   mongoose.model('Registration', regSchema);

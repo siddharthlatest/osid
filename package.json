@@ -8,7 +8,9 @@
     "nib": "*",
     "mongoose": "*",
     "mongodb": "*",
-    "connect-mongodb": "*"
+    "connect-mongodb": "*",
+    "passport": "*",
+    "passport-github": "*"
   },
   "engines": {
     "node": "0.8.x",
