@@ -17,7 +17,7 @@ block content
           a(href='#about')
             i.icon-chevron-right
             | OSID Hackathon
-        li
+        // li
           a(href='#announcements')
             i.icon-chevron-right
             | Important announcements
@@ -29,7 +29,7 @@ block content
           a(href='#venue')
             i.icon-chevron-right
             | Venue
-        li
+        // li
           a(href='#prizes')
             i.icon-chevron-right
             | Prizes        
@@ -56,7 +56,7 @@ block content
       section#about
         h2 OSID Hackathon
         p(style='height:400px;') OSID presents a 24 hour hackathon for students at DA-IICT. Team up with other hackers, show us your hacking chops while we pamper you with great food and coffee! This event is basically to bring together student hackers in and around Ahmedabad. 
-      section#announcements
+      // section#announcements
         p(style='height:400px;background-color:#ddd;') Foobar blog
       section#registration
         include form.html
@@ -64,14 +64,37 @@ block content
         h2 Venue
         p(style='') The hackathon will be held in the DA-IICT campus.
         <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=DAIICT,+Gandhinagar,+Gujarat,+India&amp;aq=0&amp;oq=daiict&amp;sll=23.222806,72.657126&amp;sspn=0.082032,0.169086&amp;t=h&amp;ie=UTF8&amp;hq=DAIICT,+Gandhinagar,+Gujarat,+India&amp;ll=23.188392,72.628358&amp;spn=0.006295,0.006295" style="color:#0000FF;text-align:left">View Larger Map</a></small>
-      section#prizes
-        p(style='height:400px;background-color:#ccc;') Prizes
+      // section#prizes
+        h2 Prizes
+        p(style='') We love good hacks and we love to pamper our hackers! Here are the prizes and swag we are waiting to give away: 
+          .row
+            .span3
+              section
+              h4(style='text-align:center') 1st prize
+              img(src='../img/kindle.jpg',align='center')
+              p(style='font-size:16px;font-color:#646464;text-align:center') A Kindle (e-reader Wi-Fi, 6” E Ink Display) to each team member
+            .span3
+              section
+              h4(style='text-align:center') 2nd prize
+              img(src='../img/aws-logo.jpg',align='center')
+              p(style='font-size:16px;font-color:#646464;text-align:center') 
+              | An Amazon EC2 instance free for one year to each team member
+            .span3
+              section
+              h4(style='text-align:center') Runners up
+              a(href='http://www.crossword.in/')
+                img(src='../img/crossword.jpg',align='center')
+              p(style='font-size:16px;font-color:#646464;text-align:center) Crossword coupons worth Rs. 1500 to each team member
       section#judges
-        p(style='height:400px;background-color:#ccc;') Judges
+        h2 Judges
+        p(style='') Yet to be announced.
       section#sponsors
-        p(style='height:400px;background-color:#eee;') Sponsors
+        h2 Sponsors
+        p(style='') If you wish to sponsor our event for developer, entrepreneur and investor outreach and to encourage student hackers, please contact us at team@osid.in 
+        | We thank our awesome sponsors for all their help. The sponsor listing will be out soon.
       section#rules
-        p(style='height:400px;background-color:#888;') Rules for Participation
+        h2 Rules for participation
+        p(style='') 
       section#discuss
         h2 Contact Us
         p(style='height:400px;') For queries drop us a mail at team@osid.in .
