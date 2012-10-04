@@ -29,7 +29,10 @@ $(document).ready(function() {
   $('#register').submit(function() {
     $.post('/register', $('#register').serialize(), function(data) {
       console.log(data);
-      $('#topOfContent').append('<div class="alert alert-block alert-success fade in" style=""><button type="button" class="close" data-dismiss="alert">&times;</button><p class="alert-heading">Registration successful.</p></div>');
+      if (data.charAt(0).toLowerCase() == 's')
+        $('#topOfContent').append('<div class="alert alert-block alert-success fade in" style=""><button type="button" class="close" data-dismiss="alert">&times;</button><p class="alert-heading">You are awesome!</p></div>');
+      else
+        $('#topOfContent').append('<div class="alert alert-block alert-error fade in" style=""><button type="button" class="close" data-dismiss="alert">&times;</button><p class="alert-heading">Record updation failed. Try again :(. Or shoot a mail at team@osid.in.</p></div>');
     });
     return false;  // Stop from submitting again
   });

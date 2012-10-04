@@ -7,7 +7,7 @@ function defineModels(mongoose, fn) {
     'hacklink': String,
     'hackdesc': String,
     'email': String,
-    'cell': Number,
+    'cell': String,
     'githubHandle': String,
     'twitterHandle': String,
     'organization': String,
