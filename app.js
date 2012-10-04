@@ -30,8 +30,11 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
+      console.log('User profile after github login - ', profile);
+      console.log('Access token - ', accessToken);
+      console.log('Refresh token - ', refreshToken);
       Registration.find({id: profile.id}, 'githubHandle', function(err, user) {
-        console.log(profile);
+        console.log('Error any - ', err);
         if(err) {    // OAuth error
           return done(err);
         } else if (user) {  // User record in the database
@@ -56,7 +59,8 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log(req.user);
+    console.log('On way to rendering after github login - ', req);
+    console.log('User', req.user);
     res.render('index', req.user);
   });
 
