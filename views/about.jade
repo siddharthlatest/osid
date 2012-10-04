@@ -1,6 +1,43 @@
 extend layout
+block css
+  //link(rel='stylesheet', href='/css/styles.css')
+  link(rel='stylesheet', href='/countdown/jquery.countdown.css')
 block navbarTitles
   li
     a(href='/') Hackathon
   li.active
     a(href='#') OSID Team
+block content
+  .row
+    #topOfContent.span12(style='z-index:10;top:40px;position:fixed;')
+  
+  .row
+      section
+        h1(style='font-size:30px;font-color:#585858;text-align:center') Open Source Initiative at DA-IICT
+        p(style='font-size:16px;font-color:#646464;text-align:center') We are a bunch of 5 FOSS enthusiasts who wish to help grow our community of student open source developers.
+   .row
+      .span3
+        section
+         img(src='../img/osidlogo.png',align='center')
+         p(style='font-size:16px;font-color:#646464;text-align:center') 
+         a(href='https://github.com/aakritigupta') Aakriti Gupta   
+      .span3
+        section
+          img(src='../img/osidlogo.png',align='center')
+          p(style='font-size:16px;font-color:#646464;text-align:center) 
+          a(href='#') Aman Agarwal
+      .span3
+        section
+          img(src='../img/osidlogo.png',align='center')
+          p(style='font-size:16px;font-color:#646464;text-align:center)
+          a(href='#') Jiten Thakkar
+      .span3
+        section
+          img(src='../img/osidlogo.png',align='center')
+          p(style='font-size:16px;font-color:#646464;text-align:center)
+          a(href='#') Kumar Sumeet
+      .span3
+        section
+          img(src='../img/osidlogo.png',align='center')
+          p(style='font-size:16px;font-color:#646464;text-align:center)
+          a(href='https://github.com/sids-aquarius') Siddharth Kothari
