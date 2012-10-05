@@ -9,8 +9,8 @@ var express = require('express'),
     util = require('util'),
     GitHubStrategy = require('passport-github').Strategy;
 
-var GITHUB_CLIENT_ID = "4c5f19b873ffd11a16e4",
-    GITHUB_CLIENT_SECRET = "1e14d564e9e53cab1e292b5ae4833498317cfd8d";
+var GITHUB_CLIENT_ID = "3265ceedda2e8dcc7863",
+    GITHUB_CLIENT_SECRET = "61396652f379ac7b1063242bdc1330aeda459854";
 
 var app = express();
 
@@ -22,45 +22,32 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://osid.in"
+    callbackURL: "http://osid.in/auth/github/callback#registration"
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-    Registration.find({id: profile.id}, 'name', function(err, user){
-                      if(err){
-                        var reg = new Registration();
-                        reg.set('id', profile.id);
-                        return done(null, reg);	
-                      }else{
-                        console.log(user);
-			return done(null, user);
-                      }
-                     })
-
+      console.log('User profile after github login - ', profile);
+      console.log('Access token - ', accessToken);
+      Registration.findOne({'githubHandle': profile.username}, function(err, user) {
+        console.log('Error any - ', err);
+        if(err) {    // OAuth error
+          return done(err);
+        } else if (user) {  // User record in the database
+          console.log("User is in the database", user);
+          return done(null, user);
+        } else {     // record not in database
+          console.log("New registration", user);
+          var reg = new Registration();
+          reg.set('githubHandle', profile.username);
+          return done(null, reg);	
+        }
+      })
     });
   }
 ));
-
-app.get('/auth/github',
-  passport.authenticate('github'),
-  function(req, res){
-
-  });
-
-app.get('/auth/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
 
 function compile(str, path) {
   return stylus(str)
@@ -79,25 +66,75 @@ models.defineModels(mongoose, function() {
   });
 });
 
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
-app.use(express.logger('dev'))
-app.use(stylus.middleware({
-  src: __dirname + '/assets',
-  compile: compile
-}));
-app.use(express.static(__dirname + '/assets'));
-app.use(express.bodyParser());
+app.configure(function() {
+  app.set('views', __dirname + '/views')
+  app.set('view engine', 'jade')
+  app.use(express.logger('dev'))
+  app.use(stylus.middleware({
+    src: __dirname + '/assets',
+    compile: compile
+  }));
+  app.use(express.static(__dirname + '/assets'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: 'keyboard cat'}));
+  app.use(passport.initialize());
+  app.use(passport.session({secret: ''}));
+  app.use(app.router);
+});
 
 app.get('/', function (req, res) {
-  res.render('index', {title: ''});
+  res.locals.githubHandle=''
+  res.locals.twitterHandle=''
+  res.locals.organization=''
+  res.locals.hackdesc=''
+  res.locals.hacklink=''
+  res.locals.cell=''
+  res.locals.email=''
+  res.locals.firstname=''
+  res.locals.lastname=''
+  res.render('index', {title: '', githubHandle: ''});
+});
+
+app.get('/auth/github',
+  passport.authenticate('github'),
+  function(req, res) {
+    console.log('called while authentication');
+  });
+
+app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/' }),
+  function(req, res) {
+    res.locals.githubHandle=''
+    res.locals.twitterHandle=''
+    res.locals.organization=''
+    res.locals.hackdesc=''
+    res.locals.hacklink=''
+    res.locals.cell=''
+    res.locals.email=''
+    res.locals.firstname=''
+    res.locals.lastname=''
+    var object = req.user;
+    object['title'] = '';
+    console.log('Before rendering: User --', object);
+    res.render('index', object);
+  });
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 app.post('/register', function (req, res) {
-  console.log(req.body);
-  var reg = new Registration({githubHandle:req.param('githubHandle'), organization:req.param('organization')});
-  console.log(reg);
-  reg.save(function(err) {
+  console.log('Request parameters while saving - ', req.body);
+  console.log('Twitter Handle - ', req.param('twitterHandle'));
+  var reg = new Registration({githubHandle:req.param('githubHandle'), twitterHandle:req.param('twitterHandle'), organization:req.param('organization'), cell:req.param('cell'), email:req.param('email'), hacklink:req.param('hacklink'), hackdesc:req.param('hackdesc'), firstname:req.param('firstname'), lastname:req.param('lastname')});
+  var upsertReg = reg.toObject(); // Convert Model to a simple object
+  console.log('Upsert this -', upsertReg);
+  console.log('ID to save - ', upsertReg.githubHandle);
+  delete upsertReg._id;           // Delete the _id property, or "Modification on _id" not allowed error
+  Registration.update({githubHandle:upsertReg.githubHandle}, upsertReg, {upsert:true}, function(err) {
     if (err) {
       console.log("Error: ", err);
       res.send('Error saving id -', err);
@@ -107,6 +144,7 @@ app.post('/register', function (req, res) {
 });
 
 app.get('/about', function (req, res) {
+  res.locals.githubHandle = ''
   res.render('about', {title: 'About'});
 });
 

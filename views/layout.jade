@@ -15,7 +15,7 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand(href='#') OSID Hackathon
+          a.pull-left.brand(href='/') OSID Hackathon
           .nav-collapse.collapse
             ul.nav
               block navbarTitles
@@ -23,8 +23,14 @@ html
                   a(href='#') Hackathon
                 li
                   a(href='/about') OSID Team
+            if (githubHandle) !== ''
+              a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;') Hi, #{githubHandle}
+            else
+              a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;')
+                img(src='/img/githubauth.png',width='20px')
+                | &nbsp; Login with Github
     .container(style='position:relative;min-height:440px;')
-      header.jumbotron.subhead#overview
+      .jumbotron.subhead#overview
         .row
           .span3
             br
@@ -36,7 +42,6 @@ html
               .span6
                 i.p(style='font-size:15px;') Meet fellow hackers, build awesome stuff.
               .span3
-                .pull-right.btn.btn-large.btn-primary(style='margin-right:40px;') Particpant Login
       block content
       br
     script(src='http://code.jquery.com/jquery-latest.js')
