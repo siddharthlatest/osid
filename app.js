@@ -7,10 +7,11 @@ var express = require('express'),
     nib = require("nib"),
     passport = require('passport'),
     util = require('util'),
-    GitHubStrategy = require('passport-github').Strategy;
+    GitHubStrategy = require('passport-github').Strategy,
+    config = require('./config');
 
-var GITHUB_CLIENT_ID = "3265ceedda2e8dcc7863",
-    GITHUB_CLIENT_SECRET = "61396652f379ac7b1063242bdc1330aeda459854";
+var GITHUB_CLIENT_ID = config['GITHUB_CLIENT_ID'],
+    GITHUB_CLIENT_SECRET = config['GITHUB_CLIENT_SECRET'];
 
 var app = express();
 
@@ -59,7 +60,7 @@ function compile(str, path) {
 //setup registration model
 models.defineModels(mongoose, function() {
   app.registration = Registration = mongoose.model('Registration');
-  mongoose.connect('mongodb://106.187.50.124/foobar');
+  mongoose.connect('mongodb://'+config['user']+':'+config['pass']+'@'+config['ip']+'/'+config['database']);
   mongoose.connection.on("open", function() {
     console.log("Connected to foobar schema");
     Registration.count({}, function(err, count) {console.log("Records: ", count);});
@@ -78,7 +79,7 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({secret: 'keyboard cat'}));
+  app.use(express.session({secret: config['SESSION_SECRET']}));
   app.use(passport.initialize());
   app.use(passport.session({secret: ''}));
   app.use(app.router);
