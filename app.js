@@ -60,7 +60,9 @@ function compile(str, path) {
 //setup registration model
 models.defineModels(mongoose, function() {
   app.registration = Registration = mongoose.model('Registration');
-  mongoose.connect('mongodb://'+config['user']+':'+config['pass']+'@'+config['ip']+'/'+config['database']);
+  mongoose.connect('mongodb://'+config['user']+':'+config['pass']+'@'+config['ip']+'/'+config['database'], function(err) {
+    console.log('Database connection failed - ', err);
+  });
   mongoose.connection.on("open", function() {
     console.log("Connected to foobar schema");
     Registration.count({}, function(err, count) {console.log("Records: ", count);});
