@@ -1,0 +1,9 @@
+{
+  "user":"osid",
+  "pass":"fossosid",
+  "ip":"106.187.50.124",
+  "database":"foobar",
+  "GITHUB_CLIENT_ID":"3265ceedda2e8dcc7863",
+  "GITHUB_CLIENT_SECRET":"61396652f379ac7b1063242bdc1330aeda459854",
+  "SESSION_SECRET":"keyboard mouse"
+}
