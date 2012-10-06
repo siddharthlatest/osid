@@ -24,7 +24,8 @@ html
                 li
                   a(href='/about') OSID Team
             if (githubHandle) !== ''
-              a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;') Hi, #{githubHandle}
+              a.pull-right.btn.btn-primary(href='/logout',style='margin-right:10px;z-index:10;') Logout
+              a.pull-right.btn.disabled(href='#',style='margin-right:10px;z-index:10;') Hi, #{githubHandle}
             else
               a.pull-right.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;')
                 img(src='/img/githubauth.png',width='20px')

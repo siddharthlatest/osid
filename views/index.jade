@@ -62,9 +62,17 @@ block content
       //section#announcements
       //  p(style='height:400px;background-color:#ddd;') Foobar blog
       section#registration
-        include form.html
         if (githubHandle) !== ''
-        input(type='hidden', id='githubHandleJ', value='#{githubHandle}')
+          input(type='hidden', id='githubHandleJ', value='#{githubHandle}')
+          include form.html
+        else
+          legend
+            | Register for OSID Hackathon&nbsp;
+            span(style='font-size: 10px;') (All fields are mandatory)
+          p To register, 
+            a.btn.btn-primary(href='/auth/github',style='margin-right:10px;z-index:10;')
+              img(src='/img/githubauth.png',width='20px')
+              | &nbsp; Login with Github
         if (twitterHandle) !== ''
           input(type='hidden', id='twitterHandleJ', value='#{twitterHandle}')
         if (organization) !== ''
