@@ -82,23 +82,29 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({secret: config['SESSION_SECRET']}));
+  app.use(express.session({secret: config['SESSION_SECRET'], store: express.session.MemoryStore({reapInterval: 60000*10})}));
   app.use(passport.initialize());
   app.use(passport.session({secret: ''}));
   app.use(app.router);
 });
 
 app.get('/', function (req, res) {
-  res.locals.githubHandle=''
-  res.locals.twitterHandle=''
-  res.locals.organization=''
-  res.locals.hackdesc=''
-  res.locals.hacklink=''
-  res.locals.cell=''
-  res.locals.email=''
-  res.locals.firstname=''
-  res.locals.lastname=''
-  res.render('index', {title: '', githubHandle: ''});
+  if (!req.session.passport.user) {
+    res.locals.githubHandle=''
+    res.locals.twitterHandle=''
+    res.locals.organization=''
+    res.locals.hackdesc=''
+    res.locals.hacklink=''
+    res.locals.cell=''
+    res.locals.email=''
+    res.locals.firstname=''
+    res.locals.lastname=''
+    res.render('index', {title: ''});
+  } else {
+    req.user['title'] = '';
+    console.log('user - ', req.user);
+    res.render('index', req.user);
+  }
 });
 
 app.get('/auth/github',
@@ -110,22 +116,13 @@ app.get('/auth/github',
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    res.locals.githubHandle=''
-    res.locals.twitterHandle=''
-    res.locals.organization=''
-    res.locals.hackdesc=''
-    res.locals.hacklink=''
-    res.locals.cell=''
-    res.locals.email=''
-    res.locals.firstname=''
-    res.locals.lastname=''
-    var object = req.user;
-    object['title'] = '';
-    console.log('Before rendering: User --', object);
-    res.render('index', object);
+    req.user['title'] = '';
+    console.log('Before rendering: User --', req.user);
+    console.log('session object: ', req.session);
+    res.render('index', req.user);
   });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
@@ -138,6 +135,11 @@ app.post('/register', function (req, res) {
   console.log('Upsert this -', upsertReg);
   console.log('ID to save - ', upsertReg.githubHandle);
   delete upsertReg._id;           // Delete the _id property, or "Modification on _id" not allowed error
+  if (req.session.passport.user) {// Update the information if user is logged in
+    console.log('User info. before, ', req.session.passport.user);
+    req.session.passport.user = upsertReg;
+    console.log('User info. now, ', req.session.passport.user);
+  }
   Registration.update({githubHandle:upsertReg.githubHandle}, upsertReg, {upsert:true}, function(err) {
     if (err) {
       console.log("Error: ", err);
@@ -148,7 +150,10 @@ app.post('/register', function (req, res) {
 });
 
 app.get('/about', function (req, res) {
-  res.locals.githubHandle = ''
+  if (req.session.passport.user)
+    res.locals.githubHandle = req.session.passport.user.githubHandle;
+  else
+    res.locals.githubHandle = ''
   res.render('about', {title: 'About'});
 });
 
