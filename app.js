@@ -26,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GitHubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: "http://osid.in/auth/github/callback#registration"
+    callbackURL: "http://"+ config['callback']+"/auth/github/callback#registration"
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
@@ -115,11 +115,8 @@ app.get('/auth/github',
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/' }),
-  function(req, res) {
-    req.user['title'] = '';
-    console.log('Before rendering: User --', req.user);
-    console.log('session object: ', req.session);
-    res.render('index', req.user);
+  function(req, res) {  // Hide the 'auth' URL
+    res.redirect('/');
   });
 
 app.get('/logout', function(req, res) {
@@ -144,8 +141,10 @@ app.post('/register', function (req, res) {
     if (err) {
       console.log("Error: ", err);
       res.send('Error saving id -', err);
-    } else
+    } else {
+      console.log('send. success');
       res.send('success');
+    }
   });
 });
 
