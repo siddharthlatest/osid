@@ -1,10 +1,10 @@
 {
-  "user":"osid",
-  "pass":"fossosid",
+  "user":"",
+  "pass":"",
   "ip":"106.187.50.124",
   "database":"foobar",
-  "callback":"osid.in",
-  "GITHUB_CLIENT_ID":"3265ceedda2e8dcc7863",
-  "GITHUB_CLIENT_SECRET":"6c23fd83e4cc3c6f62a69aed5d35f22473915ad6",
-  "SESSION_SECRET":"keyboard mouse"
+  "callback":"127.0.0.1:5000",
+  "GITHUB_CLIENT_ID":"0453e54b692bf387e68b",
+  "GITHUB_CLIENT_SECRET":"71fe063ca8891b28d3951a36536efabbd4c071d8",
+  "SESSION_SECRET":"keyboard cat"
 }
